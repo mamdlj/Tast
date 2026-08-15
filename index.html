@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MasterShop - فروشگاه خدمات و محصولات دیجیتال">
+  <title>MasterShop | فروشگاه دیجیتال</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container nav">
+      <a class="logo" href="#"><span>MASTER</span>SHOP</a>
+      <nav>
+        <a href="#home">خانه</a>
+        <a href="#products">محصولات</a>
+        <a href="#services">خدمات</a>
+        <a href="#support">پشتیبانی</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="icon-btn" id="searchBtn" aria-label="جستجو">⌕</button>
+        <button class="cart-btn" id="cartBtn">سبد خرید <b id="cartCount">0</b></button>
+        <button class="login-btn" id="loginBtn">ورود</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <span class="badge">فروشگاه خدمات دیجیتال</span>
+          <h1>هر چیزی که برای<br><strong>دنیای دیجیتال</strong> نیاز داری.</h1>
+          <p>خدمات سریع، محصولات دیجیتال و پشتیبانی حرفه‌ای در یک فروشگاه مدرن.</p>
+          <div class="hero-actions">
+            <a class="primary-btn" href="#products">مشاهده محصولات</a>
+            <a class="ghost-btn" href="#services">خدمات ما</a>
+          </div>
+          <div class="stats">
+            <div><strong>+5K</strong><span>سفارش موفق</span></div>
+            <div><strong>+2K</strong><span>کاربر</span></div>
+            <div><strong>24/7</strong><span>پشتیبانی</span></div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="glow"></div>
+          <div class="floating-card top">⚡ تحویل سریع</div>
+          <div class="digital-box">
+            <div class="box-icon">M</div>
+            <span>MASTER</span>
+            <strong>SHOP</strong>
+            <small>Digital Store</small>
+          </div>
+          <div class="floating-card bottom">✓ سفارش امن</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="products">
+      <div class="container">
+        <div class="section-head">
+          <div><span class="eyebrow">فروشگاه</span><h2>محصولات محبوب</h2></div>
+          <div class="filters" id="filters">
+            <button class="active" data-category="all">همه</button>
+            <button data-category="gaming">گیمینگ</button>
+            <button data-category="telegram">تلگرام</button>
+            <button data-category="digital">دیجیتال</button>
+          </div>
+        </div>
+        <div class="search-wrap hidden" id="searchWrap">
+          <input id="searchInput" type="search" placeholder="نام محصول را جستجو کنید...">
+        </div>
+        <div class="products" id="productsGrid"></div>
+      </div>
+    </section>
+
+    <section class="section services" id="services">
+      <div class="container">
+        <div class="section-head"><div><span class="eyebrow">چرا MasterShop؟</span><h2>خدمات ما</h2></div></div>
+        <div class="service-grid">
+          <article><div class="service-icon">⚡</div><h3>تحویل سریع</h3><p>پس از ثبت سفارش، فرآیند ارائه محصول با سرعت بالا انجام می‌شود.</p></article>
+          <article><div class="service-icon">🔒</div><h3>امن و مطمئن</h3><p>اطلاعات سفارش و حساب کاربری شما با ساختار امن نگهداری می‌شود.</p></article>
+          <article><div class="service-icon">💬</div><h3>پشتیبانی</h3><p>در صورت بروز مشکل می‌توانید از بخش پشتیبانی با ما ارتباط بگیرید.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="support section" id="support">
+      <div class="container support-box">
+        <div><span class="eyebrow">پشتیبانی</span><h2>کمکی لازم داری؟</h2><p>پیام خودت را ارسال کن تا تیم پشتیبانی بررسی کند.</p></div>
+        <form id="supportForm">
+          <input id="supportName" required placeholder="نام شما">
+          <input id="supportContact" required placeholder="آیدی تلگرام یا شماره تماس">
+          <textarea id="supportMessage" required placeholder="متن پیام"></textarea>
+          <button class="primary-btn" type="submit">ارسال پیام</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer">
+      <div><a class="logo" href="#"><span>MASTER</span>SHOP</a><p>فروشگاه خدمات و محصولات دیجیتال.</p></div>
+      <div><h4>دسترسی سریع</h4><a href="#products">محصولات</a><a href="#services">خدمات</a><a href="#support">پشتیبانی</a></div>
+      <div><h4>ارتباط</h4><a href="#">Telegram</a><a href="#">Instagram</a><a href="#">پشتیبانی آنلاین</a></div>
+    </div>
+    <div class="copyright">© 2026 MasterShop — تمامی حقوق محفوظ است.</div>
+  </footer>
+
+  <div class="overlay hidden" id="overlay"></div>
+
+  <aside class="drawer" id="cartDrawer">
+    <div class="drawer-head"><h2>سبد خرید</h2><button class="close" data-close>×</button></div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-bottom">
+      <div><span>جمع کل</span><strong id="cartTotal">۰ تومان</strong></div>
+      <button class="primary-btn full" id="checkoutBtn">ادامه پرداخت</button>
+    </div>
+  </aside>
+
+  <div class="modal hidden" id="authModal">
+    <button class="close" data-close>×</button>
+    <div class="modal-logo">M</div>
+    <h2 id="authTitle">ورود به حساب</h2>
+    <p>برای مدیریت سفارش‌ها وارد حساب خود شوید.</p>
+    <form id="authForm">
+      <input required type="text" placeholder="شماره موبایل یا ایمیل">
+      <input required type="password" placeholder="رمز عبور">
+      <button class="primary-btn full" type="submit">ورود</button>
+    </form>
+    <button class="switch-auth" id="switchAuth">حساب ندارم؛ ثبت‌نام می‌کنم</button>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="script.js"></script>
+</body>
+</html>
