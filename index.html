@@ -70,6 +70,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;ba
 .bar i{display:block;height:100%;background:linear-gradient(90deg,#7a0300,var(--red2))}
 button:not(.ghost):not(.x):not(.chip):hover{box-shadow:0 0 22px rgba(225,6,0,.55)}
 #go{font-size:1.05rem;padding:12px 30px;box-shadow:0 0 18px rgba(225,6,0,.35)}
+.toast{position:fixed;left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));max-width:440px;margin:auto;background:#200605;border:1px solid var(--red);border-radius:10px;padding:10px 14px;z-index:10;box-shadow:0 0 24px rgba(225,6,0,.35)}
 @media(max-width:640px){.hero{grid-template-columns:1fr}.art{max-width:260px;margin:0 auto}}
 .hide{display:none}
 @media(max-width:520px){.item{grid-template-columns:1fr}.item img{width:100%}}
@@ -129,6 +130,7 @@ button:not(.ghost):not(.x):not(.chip):hover{box-shadow:0 0 22px rgba(225,6,0,.55
   <div class="prog hide" id="prog"><i></i></div>
   <div class="chips" id="chips"></div>
   <div id="list"></div>
+  <div class="toast hide" id="toast" role="status"></div>
 </div>
 
 <script>
@@ -214,7 +216,7 @@ function resBox(it,f){
   if(!r)return null;
   if(r==='loading')return h('div',{class:'r'},h('b',{text:f.name}),h('span',{class:'meta',text:'در حال پردازش…'}));
   if(r.unsupported)return h('div',{class:'r'},h('b',{text:f.name}),h('span',{class:'warn',text:'پشتیبانی نمی‌شود'}));
-  const a=h('a',{href:r.url,download:it.base+'.'+f.id},h('button',{class:'ghost',text:'دانلود'}));
+  const a=h('button',{class:'ghost',text:'دانلود',onclick:()=>saveFile(it.base+'.'+f.id,r.blob)});
   return h('div',{class:'r'},h('b',{text:f.name}),h('span',{text:fmtSize(r.blob.size)}),
     h('span',{class:'meta',text:r.w+'×'+r.h}),
     h('div',{class:'bar'},h('i',{style:'width:'+Math.min(100,Math.round(r.blob.size/it.file.size*100))+'%'})),
@@ -280,9 +282,24 @@ $('#zip').onclick=async()=>{
   });
   if(notes.length)z.file('notes.txt','\ufeff'+notes.join('\n'));
   const b=await z.generateAsync({type:'blob'});
-  const a=h('a',{href:URL.createObjectURL(b),download:'images.zip'});document.body.append(a);a.click();a.remove();
+  await saveFile('images.zip',b);
 };
 
+let DL=null;
+(async()=>{try{if(window.claude&&claude.use)DL=await claude.use('downloads')}catch(e){}})();
+const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.remove('hide');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.add('hide'),5000)};
+async function saveFile(name,blob){
+  if(DL){
+    try{await DL.save({filename:name,data:blob});return}
+    catch(e){
+      const c=e&&e.code;
+      if(c==='declined')return;
+      if(c==='rejected_extension'){toast('این نسخه دمو فقط JPG، PNG، WebP و ZIP را دانلود می‌کند؛ BMP در نسخه گیت‌هاب کار می‌کند. داخل ZIP هست.');return}
+      if(c==='too_large'){toast('فایل برای دانلود خیلی بزرگ است؛ حجم هدف را کمتر کن.');return}
+    }
+  }
+  const a=h('a',{href:URL.createObjectURL(blob),download:name});document.body.append(a);a.click();a.remove();
+}
 const drop=$('#drop'),file=$('#file');
 drop.onclick=()=>file.click();
 drop.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();file.click()}};
